@@ -1,0 +1,12 @@
+reponses = ['Sim',
+            'Como é obvio',
+            'Certo como o destino',
+            'Certo como o RNM do Arnaldo',
+            'Pois...',
+            'Ahm...',
+            'O bot que tentou contactar não se encontra agora disponivel, tente mais tarde',
+            'Nope',
+            'E a tita ?',
+            'Pois não me cheira',
+            'SSSSsssss ...... não claro que não, foda-se como assim, é obvio que não',
+            'Dar 120 com o Serfio era mais facil']

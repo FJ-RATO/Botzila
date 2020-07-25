@@ -1,20 +1,30 @@
 import discord
+from discord.ext import commands
 from secret import secret as token
+from assets import reponses
+import random
 
-prefix = '!'
+client = commands.Bot(command_prefix= '!') # set the command prefix to !
 
-class Myclient(discord.Client):
-	async def on_ready(self):
-		print('Logged on as {0}!'.format(self.user))
+@client.event
+async def on_ready():
+	print('We are online')
 
-	async def on_message(self,message):
-		if message.author == client.user:
-			return #bot wont listen to itself
-		if message.content.startswith(prefix + 'ping'):
-			await message.channel.send('pong')
-		#print('Message from {0.author}: {0.content}'.format(message))
+@client.event
+async def on_member_join(member): #check how to send to server
+	print(f'O morcão {member} entrou no server')
+
+@client.event
+async def on_member_remove(member): #check how to send to server
+	print(f'Xau {member} morre longe')
+
+@client.command()
+async def ping(ctx): #migration  ctx == context
+	await ctx.send(f'Pong with ping of {round(client.latency*1000)}ms!')
+
+@client.command()
+async def maia(ctx, *,question):
+	await ctx.send(f'Pergunta:{question}\nResposta: {random.choice(reponses)}')
 
 
-
-client = Myclient()
 client.run(token)
