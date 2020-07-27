@@ -11,12 +11,14 @@ async def on_ready():
 	print('We are online')
 
 @client.event
-async def on_member_join(member): #check how to send to server
-	print(f'O morcão {member} entrou no server')
+async def on_member_join(member):
+	await member.send(f'O morcão {member} entrou no server')
+	await print(f'O morcão {member} entrou no server')
 
 @client.event
-async def on_member_remove(member): #check how to send to server
-	print(f'Xau {member} morre longe')
+async def on_member_remove(member):
+	await member.send(f'Xau {member} morre longe')
+	await print(f'Xau {member} morre longe')
 
 @client.command()
 async def ping(ctx): #migration  ctx == context
@@ -26,5 +28,8 @@ async def ping(ctx): #migration  ctx == context
 async def maia(ctx, *,question):
 	await ctx.send(f'Pergunta:{question}\nResposta: {random.choice(reponses)}')
 
+@client.command()
+async def pm(ctx, target: discord.User, *, message): #!pm @target 'message'
+	await target.send(message)
 
 client.run(token)
