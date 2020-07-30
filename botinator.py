@@ -3,6 +3,7 @@ from discord.ext import commands
 from secret import secret as token
 from assets import *
 import random
+import sqlite3
 
 client = commands.Bot(command_prefix= '!') # set the command prefix to !
 
@@ -31,5 +32,26 @@ async def maia(ctx, *,question):
 async def pm(ctx, target: discord.User, *, message): #!pm @target 'message'
 	await target.send(message)
 
+#economic commands
+
+#balance
+@client.command()
+async def carteira(ctx):
+	bank = sqlite3.connect('main.sqlite')
+	cursor = bank.cursor()
+	cursor.execute(f"SELECT id FROM bank where id = {ctx.author.id}")
+	result = cursor.fetchone()
+	if result is None:
+		cursor.execute(f'INSERT INTO bank(id,cash) VALUES({ctx.author.id},0)')
+		await ctx.send(f'{ctx.author} agora é capitalista')
+	else:
+		cursor.execute(f'SELECT cash FROM bank where id = {ctx.author.id}')
+		result = cursor.fetchone()
+		await ctx.send(f'{ctx.author} tem {result} botes')
+	bank.commit()
+	cursor.close()
+	bank.close()
+
+#(ADMIN TEST) add entry
 
 client.run(token)
