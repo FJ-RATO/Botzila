@@ -9,4 +9,4 @@ reponses = ['Sim',
             'E a tita ?',
             'Pois não me cheira',
             'SSSSsssss ...... não claro que não, foda-se como assim, é obvio que não',
-            'Dar 120 com o Serfio era mais facil']
+            'Dar 120 com o Sergio era mais facil']
