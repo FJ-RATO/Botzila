@@ -54,4 +54,24 @@ async def carteira(ctx):
 
 #(ADMIN TEST) add entry
 
+#event handle ROLES
+
+@client.event
+async def on_raw_reaction_add(payload):
+	message_id = payload.message_id
+	if message_id == 744271808630620350:
+		role = discord.utils.get(client.guilds[0].roles , name = payload.emoji.name)
+		await payload.member.add_roles(role)
+
+@client.event
+async def on_raw_reaction_remove(payload):
+	message_id = payload.message_id
+	if message_id == 744271808630620350:
+		role = discord.utils.get(client.guilds[0].roles , name = payload.emoji.name)
+		user = discord.utils.get(client.guilds[0].members,id = payload.user_id)
+		await user.remove_roles(role)
+
+#@client.event
+#async def on_raw_reaction_remove(payload):
+
 client.run(token)
