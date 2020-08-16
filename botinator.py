@@ -52,10 +52,8 @@ async def carteira(ctx):
 	cursor.close()
 	bank.close()
 
-#(ADMIN TEST) add entry
 
-#event handle ROLES
-
+# ROLES
 @client.event
 async def on_raw_reaction_add(payload):
 	message_id = payload.message_id
@@ -71,7 +69,14 @@ async def on_raw_reaction_remove(payload):
 		user = discord.utils.get(client.guilds[0].members,id = payload.user_id)
 		await user.remove_roles(role)
 
-#@client.event
-#async def on_raw_reaction_remove(payload):
+#hidden commands
+@client.command()
+async def role_hidden(ctx): #O ID DOS EVENTOS DOS ROLES DEVE SER DESTA MENSAGEM
+	embed = discord.Embed(title="Lista de Roles", description="Carrega no emoji para obter o role", color=0x00ff0e)
+	message = await ctx.send(embed=embed)
+	terraria = discord.utils.get(client.guilds[0].emojis, name = 'terraria')
+	minecraft = discord.utils.get(client.guilds[0].emojis, name='minecraft')
+	await message.add_reaction(terraria)
+	await message.add_reaction(minecraft)
 
 client.run(token)
