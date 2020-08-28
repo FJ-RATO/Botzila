@@ -54,26 +54,31 @@ async def carteira(ctx):
 
 
 # ROLES
+
+
 @client.event
 async def on_raw_reaction_add(payload):
 	message_id = payload.message_id
-	if message_id == 744271808630620350:
+	print(master_id)
+	if message_id == master_id:
 		role = discord.utils.get(client.guilds[0].roles , name = payload.emoji.name)
+		print(role)
 		await payload.member.add_roles(role)
 
 @client.event
 async def on_raw_reaction_remove(payload):
 	message_id = payload.message_id
-	if message_id == 744271808630620350:
+	if message_id == master_id:
 		role = discord.utils.get(client.guilds[0].roles , name = payload.emoji.name)
 		user = discord.utils.get(client.guilds[0].members,id = payload.user_id)
 		await user.remove_roles(role)
 
 #hidden commands
 @client.command()
-async def role_hidden(ctx): #O ID DOS EVENTOS DOS ROLES DEVE SER DESTA MENSAGEM
+async def role(ctx): #O ID DOS EVENTOS DOS ROLES DEVE SER DESTA MENSAGEM
 	embed = discord.Embed(title="Lista de Roles", description="Carrega no emoji para obter o role", color=0x00ff0e)
 	message = await ctx.send(embed=embed)
+	master_id = message.id
 	terraria = discord.utils.get(client.guilds[0].emojis, name = 'terraria')
 	minecraft = discord.utils.get(client.guilds[0].emojis, name='minecraft')
 	await message.add_reaction(terraria)
