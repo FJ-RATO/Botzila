@@ -55,20 +55,19 @@ async def carteira(ctx):
 
 # ROLES
 
+master_id = {} #dicionario com key sendo o server e value a mensagem
 
 @client.event
 async def on_raw_reaction_add(payload):
 	message_id = payload.message_id
-	print(master_id)
-	if message_id == master_id:
+	if (message_id == master_id[payload.guild_id]): #FIX SELF CALLING PLZ
 		role = discord.utils.get(client.guilds[0].roles , name = payload.emoji.name)
-		print(role)
 		await payload.member.add_roles(role)
 
 @client.event
 async def on_raw_reaction_remove(payload):
 	message_id = payload.message_id
-	if message_id == master_id:
+	if message_id == master_id[payload.guild_id]:
 		role = discord.utils.get(client.guilds[0].roles , name = payload.emoji.name)
 		user = discord.utils.get(client.guilds[0].members,id = payload.user_id)
 		await user.remove_roles(role)
@@ -78,7 +77,7 @@ async def on_raw_reaction_remove(payload):
 async def role(ctx): #O ID DOS EVENTOS DOS ROLES DEVE SER DESTA MENSAGEM
 	embed = discord.Embed(title="Lista de Roles", description="Carrega no emoji para obter o role", color=0x00ff0e)
 	message = await ctx.send(embed=embed)
-	master_id = message.id
+	master_id[message.guild.id] = message.id
 	terraria = discord.utils.get(client.guilds[0].emojis, name = 'terraria')
 	minecraft = discord.utils.get(client.guilds[0].emojis, name='minecraft')
 	await message.add_reaction(terraria)
